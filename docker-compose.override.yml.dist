@@ -1,0 +1,21 @@
+version: '3.2'
+
+services:
+  php:
+    volumes:
+      - .:/var/www/growbox
+      - ~/.composer/:/home/growbox/.composer
+    environment:
+      XDEBUG_CONFIG: "remote_host={{IDE_IP_ADDRESS}} remote_port=9090"
+      PHP_IDE_CONFIG: "serverName=Growbox"
+  nginx:
+    volumes:
+      - ./web:/var/www/growbox/web
+    ports:
+      - 80:80
+  mysql:
+    environment:
+      - MYSQL_ROOT_PASSWORD: password
+      - MYSQL_DATABASE: database
+      - MYSQL_USER: user
+      - MYSQL_PASSWORD: pass

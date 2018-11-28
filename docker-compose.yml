@@ -1,0 +1,15 @@
+version: '3.2'
+
+services:
+  php:
+    build:
+      context: docker/php-fpm
+    depends_on:
+      - mysql
+  nginx:
+    build:
+      context: docker/nginx
+    depends_on:
+      - php
+  mysql:
+    image: mysql
