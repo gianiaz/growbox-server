@@ -1,4 +1,10 @@
+# Makefile for Growbox
+
+default:
+	@$(MAKE) -s help
+
 PHP=php
+
 
 quickstart:
 	@echo "    Usage:"
@@ -17,6 +23,15 @@ quickstart:
 	@echo ""
 	@echo "      ${bold}make help${normal}"
 
+help: quickstart
+	@make help-composer
+	@make help-quality
+	@make help-symfony
+	@make help-test
+	@make help-docker
+	@make help-utils
+	@echo ""
+
 start:
 	@running=$$(docker-compose ps php | grep -c "Up"); \
 	if [ "$$running" -eq 0 ]; then \
@@ -26,6 +41,14 @@ start:
 shell: start
 	@docker-compose exec $(PHP) zsh
 
+include makefiles/utils.mk
+include makefiles/composer.mk
+include makefiles/docker.mk
+include makefiles/quality.mk
+include makefiles/symfony.mk
+include makefiles/test.mk
+
 bold := "\\033[1m"
 normal := "\\033[0m"
 boldunderline := "\\033[1m\\033[4m"
+
